@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free Tamil Nadu EB Bill Calculator | Calculate your TANGEDCO electricity bill instantly using meter readings or units. Bilingual: English & Tamil." />
+  <meta name="keywords" content="TN EB Bill Calculator, TNEB Calculator, TANGEDCO, Tamil Nadu Electricity Bill, மின் கட்டண கணக்கீடு" />
+  <title>CURRENT BILL CALCULATOR | மின் கட்டண கணக்கீடு</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-inner container">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <span class="logo-title">TN EB Calculator</span>
+          <span class="logo-sub tamil">மின் கட்டண கணக்கீடு</span>
+        </div>
+      </div>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
+        <span id="langLabel">தமிழ்</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge" data-en="Free • No Login Required • Accurate 2026 Rates" data-ta="இலவசம் • உள்நுழைவு தேவையில்லை • 2026 தொகுப்பு விகிதங்கள்">
+        Free • No Login Required • Accurate 2026 Rates
+      </div>
+      <h1 class="hero-title">
+        <span data-en="Tamil Nadu EB" data-ta="தமிழ்நாடு மின் கட்டண">Tamil Nadu EB</span><br />
+        <span class="hero-accent" data-en="Bill Calculator" data-ta="கணக்கீட்டு கருவி">Bill Calculator</span>
+      </h1>
+      <p class="hero-desc" data-en="Calculate your TANGEDCO domestic electricity bill instantly. Enter your meter readings or directly enter units consumed." data-ta="உங்கள் TANGEDCO மின்சாரக் கட்டணத்தை உடனடியாக கணக்கிடுங்கள். மீட்டர் அளவீடுகளை உள்ளிடுங்கள் அல்லது நேரடியாக அலகுகளை உள்ளிடுங்கள்.">
+        Calculate your TANGEDCO domestic electricity bill instantly. Enter your meter readings or directly enter units consumed.
+      </p>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 30 C360 60 1080 0 1440 30 L1440 60 L0 60 Z" fill="var(--bg-main)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== MAIN CALCULATOR ===== -->
+  <main class="main-section container">
+
+    <!-- MODE TABS -->
+    <div class="mode-tabs" role="tablist">
+      <button class="tab active" id="tab1" role="tab" aria-selected="true" aria-controls="mode1"
+        data-en="📊 Enter Meter Readings" data-ta="📊 மீட்டர் அளவீடுகள் உள்ளிடு">
+        📊 Enter Meter Readings
+      </button>
+      <button class="tab" id="tab2" role="tab" aria-selected="false" aria-controls="mode2"
+        data-en="⚡ Enter Units Directly" data-ta="⚡ நேரடியாக அலகுகள் உள்ளிடு">
+        ⚡ Enter Units Directly
+      </button>
+    </div>
+
+    <!-- MODE 1: Meter Readings -->
+    <div class="calc-panel active" id="mode1" role="tabpanel" aria-labelledby="tab1">
+      <div class="panel-header">
+        <h2 data-en="Calculate from Meter Readings" data-ta="மீட்டர் அளவீட்டிலிருந்து கணக்கிடு">Calculate from Meter Readings</h2>
+        <p data-en="Subtract previous reading from current reading to find units consumed." data-ta="முந்தைய அளவீட்டிலிருந்து தற்போதைய அளவீட்டை கழிக்க, உட்கொண்ட அலகுகள் கிடைக்கும்.">
+          Subtract previous reading from current reading to find units consumed.
+        </p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="prevReading" data-en="Previous Meter Reading (units)" data-ta="முந்தைய மீட்டர் அளவீடு (அலகுகள்)">Previous Meter Reading (units)</label>
+          <input type="number" id="prevReading" placeholder="e.g. 1250" min="0" inputmode="numeric" />
+        </div>
+        <div class="form-group">
+          <label for="currReading" data-en="Current Meter Reading (units)" data-ta="தற்போதைய மீட்டர் அளவீடு (அலகுகள்)">Current Meter Reading (units)</label>
+          <input type="number" id="currReading" placeholder="e.g. 1550" min="0" inputmode="numeric" />
+        </div>
+      </div>
+
+      <div class="units-preview" id="unitsPreview1" style="display:none;">
+        <span class="units-label" data-en="Units Consumed:" data-ta="உட்கொண்ட அலகுகள்:">Units Consumed:</span>
+        <span class="units-val" id="unitsVal1">0</span>
+        <span data-en="units" data-ta="அலகுகள்">units</span>
+      </div>
+
+      <div class="form-group">
+        <label for="billing1" data-en="Billing Period" data-ta="கட்டண காலம்">Billing Period</label>
+        <select id="billing1">
+          <option value="bimonthly" selected data-en="Bi-Monthly (every 2 months)" data-ta="இருமாத (ஒவ்வொரு 2 மாதங்களுக்கும்)">Bi-Monthly (every 2 months)</option>
+          <option value="monthly" data-en="Monthly" data-ta="மாதாந்திர">Monthly</option>
+        </select>
+      </div>
+
+      <button class="calc-btn" id="calcBtn1">
+        <span data-en="Calculate Bill" data-ta="கட்டணம் கணக்கிடு">Calculate Bill</span>
+      </button>
+      <div class="error-msg" id="err1"></div>
+    </div>
+
+    <!-- MODE 2: Direct Units -->
+    <div class="calc-panel" id="mode2" role="tabpanel" aria-labelledby="tab2">
+      <div class="panel-header">
+        <h2 data-en="Calculate from Units Consumed" data-ta="உட்கொண்ட அலகுகளிலிருந்து கணக்கிடு">Calculate from Units Consumed</h2>
+        <p data-en="Already know your units? Enter directly and get your bill estimate." data-ta="உங்கள் அலகுகள் தெரியுமா? நேரடியாக உள்ளிட்டு உங்கள் கட்டண மதிப்பீட்டைப் பெறுங்கள்.">
+          Already know your units? Enter directly and get your bill estimate.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="directUnits" data-en="Units Consumed" data-ta="உட்கொண்ட அலகுகள்">Units Consumed</label>
+        <input type="number" id="directUnits" placeholder="e.g. 300" min="0" inputmode="numeric" />
+      </div>
+
+      <div class="form-group">
+        <label for="billing2" data-en="Billing Period" data-ta="கட்டண காலம்">Billing Period</label>
+        <select id="billing2">
+          <option value="bimonthly" selected data-en="Bi-Monthly (every 2 months)" data-ta="இருமாத (ஒவ்வொரு 2 மாதங்களுக்கும்)">Bi-Monthly (every 2 months)</option>
+          <option value="monthly" data-en="Monthly" data-ta="மாதாந்திர">Monthly</option>
+        </select>
+      </div>
+
+      <button class="calc-btn" id="calcBtn2">
+        <span data-en="Calculate Bill" data-ta="கட்டணம் கணக்கிடு">Calculate Bill</span>
+      </button>
+      <div class="error-msg" id="err2"></div>
+    </div>
+
+    <!-- ===== RESULTS ===== -->
+    <div class="result-section" id="resultSection" style="display:none;">
+      <div class="result-header">
+        <div class="result-icon">🧾</div>
+        <h2 data-en="Your Estimated EB Bill" data-ta="உங்கள் மதிப்பிடப்பட்ட மின் கட்டணம்">Your Estimated EB Bill</h2>
+      </div>
+
+      <div class="result-total-card">
+        <div class="result-label" data-en="Total Amount Payable" data-ta="மொத்த தொகை செலுத்த வேண்டியது">Total Amount Payable</div>
+        <div class="result-amount" id="totalAmount">₹ 0</div>
+        <div class="result-units-info" id="resultUnitsInfo"></div>
+      </div>
+
+      <div class="result-breakdown">
+        <h3 data-en="Bill Breakdown" data-ta="கட்டண விவரம்">Bill Breakdown</h3>
+        <div class="breakdown-table" id="breakdownTable"></div>
+      </div>
+
+      <div class="slab-breakdown">
+        <h3 data-en="Slab-wise Calculation" data-ta="தொகுப்பு வாரியான கணக்கீடு">Slab-wise Calculation</h3>
+        <div class="slab-table" id="slabTable"></div>
+      </div>
+
+      <div class="result-note">
+        <span>⚠️</span>
+        <span data-en="This is an estimated amount based on TNEB New Tariff effective 10 May 2026. No fixed charges apply from 2026. Actual bill may slightly vary due to Fuel Cost Adjustment (FCA) and meter rent." data-ta="இது 10 மே 2026 முதல் நடைமுறையிலுள்ள TNEB புதிய கட்டண விகிதத்தின் அடிப்படையில் மதிப்பிடப்பட்ட தொகை. 2026 முதல் நிலையான கட்டணங்கள் பொருந்தாது. எரிபொருள் செலவு சரிசெய்தல் (FCA) மற்றும் மீட்டர் வாடகை காரணமாக உண்மையான கட்டணம் சிறிது மாறுபடலாம்.">
+          This is an estimated amount based on TNEB New Tariff effective 10 May 2026. No fixed charges apply from 2026. Actual bill may slightly vary due to Fuel Cost Adjustment (FCA) and meter rent.
+        </span>
+      </div>
+
+      <button class="reset-btn" id="resetBtn">
+        <span data-en="🔄 Calculate Again" data-ta="🔄 மீண்டும் கணக்கிடு">🔄 Calculate Again</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ===== TARIFF INFO TABLE ===== -->
+  <section class="tariff-section container">
+    <h2 class="section-title" data-en="TNEB New Tariff — Effective 10 May 2026" data-ta="TNEB புதிய கட்டண விகிதம் — 10 மே 2026 முதல் நடைமுறை">
+      TNEB New Tariff — Effective 10 May 2026
+    </h2>
+    <p class="section-sub" data-en="Billing is bi-monthly and telescopic. No fixed charges applicable from 2026. 200 units free for consumption up to 500 units/bi-month." data-ta="கட்டணம் இருமாத மற்றும் தொலைநோக்கு. 2026 முதல் நிலையான கட்டணங்கள் பொருந்தாது. 500 அலகுகள்/இருமாதம் வரை 200 அலகுகள் இலவசம்.">
+      Billing is bi-monthly and telescopic. No fixed charges applicable from 2026. 200 units free for consumption up to 500 units/bi-month.
+    </p>
+
+    <div class="tariff-cards">
+      <div class="tariff-card tier1">
+        <div class="tier-badge" data-en="TIER 1 — Up to 500 Units / Bi-month" data-ta="நிலை 1 — 500 அலகுகள் வரை / இருமாதம்">TIER 1 — Up to 500 Units / Bi-month</div>
+        <div class="tier-subsidy" data-en="✅ 200 Units FREE" data-ta="✅ 200 அலகுகள் இலவசம்">✅ 200 Units FREE</div>
+        <table class="tariff-table">
+          <thead>
+            <tr>
+              <th data-en="Slab (units)" data-ta="தொகுப்பு (அலகுகள்)">Slab (units)</th>
+              <th data-en="Rate / unit" data-ta="விகிதம் / அலகு">Rate / unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td data-en="1 – 200" data-ta="1 – 200">1 – 200</td><td class="free">₹0 (Free)</td></tr>
+            <tr><td data-en="201 – 400" data-ta="201 – 400">201 – 400</td><td>₹4.70</td></tr>
+            <tr><td data-en="401 – 500" data-ta="401 – 500">401 – 500</td><td>₹6.30</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tariff-card tier2">
+        <div class="tier-badge" data-en="TIER 2 — Above 500 Units / Bi-month" data-ta="நிலை 2 — 500 அலகுகளுக்கு மேல் / இருமாதம்">TIER 2 — Above 500 Units / Bi-month</div>
+        <div class="tier-subsidy warn" data-en="⚠️ Only 100 Units FREE" data-ta="⚠️ 100 அலகுகள் மட்டுமே இலவசம்">⚠️ Only 100 Units FREE</div>
+        <table class="tariff-table">
+          <thead>
+            <tr>
+              <th data-en="Slab (units)" data-ta="தொகுப்பு (அலகுகள்)">Slab (units)</th>
+              <th data-en="Rate / unit" data-ta="விகிதம் / அலகு">Rate / unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1 – 100</td><td class="free">₹0 (Free)</td></tr>
+            <tr><td>101 – 400</td><td>₹4.70</td></tr>
+            <tr><td>401 – 500</td><td>₹6.30</td></tr>
+            <tr><td>501 – 600</td><td>₹8.40</td></tr>
+            <tr><td>601 – 800</td><td>₹9.45</td></tr>
+            <tr><td>801 – 1000</td><td>₹10.50</td></tr>
+            <tr><td data-en="Above 1000" data-ta="1000-க்கு மேல்">Above 1000</td><td>₹11.55</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== HOW TO USE ===== -->
+  <section class="howto-section container">
+    <h2 class="section-title" data-en="How to Use This Calculator" data-ta="இந்த கணக்கீட்டை எவ்வாறு பயன்படுத்துவது">How to Use This Calculator</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3 data-en="Choose Your Mode" data-ta="உங்கள் பயன்முறையை தேர்வு செய்யுங்கள்">Choose Your Mode</h3>
+        <p data-en="Select 'Meter Readings' if you have your current and previous meter values. Select 'Units Directly' if you already know how many units you've consumed." data-ta="தற்போதைய மற்றும் முந்தைய மீட்டர் மதிப்புகள் இருந்தால் 'மீட்டர் அளவீடுகள்' தேர்வு செய்யுங்கள். உட்கொண்ட அலகுகள் தெரிந்தால் 'நேரடியாக அலகுகள்' தேர்வு செய்யுங்கள்.">
+          Select 'Meter Readings' if you have your current and previous meter values. Select 'Units Directly' if you already know how many units you've consumed.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3 data-en="Enter Your Values" data-ta="உங்கள் மதிப்புகளை உள்ளிடுங்கள்">Enter Your Values</h3>
+        <p data-en="Type in your meter readings or units. Optionally select your connected load and billing cycle (monthly or bi-monthly)." data-ta="உங்கள் மீட்டர் அளவீடுகள் அல்லது அலகுகளை உள்ளிடுங்கள். விருப்பத்தேர்வாக உங்கள் இணைக்கப்பட்ட சுமை மற்றும் கட்டண சுழற்சியை தேர்வு செய்யுங்கள்.">
+          Type in your meter readings or units. Optionally select your connected load and billing cycle (monthly or bi-monthly).
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3 data-en="Get Instant Results" data-ta="உடனடி முடிவுகளை பெறுங்கள்">Get Instant Results</h3>
+        <p data-en="Click 'Calculate Bill' and see a full slab-wise breakdown of your estimated TANGEDCO electricity bill." data-ta="'கட்டணம் கணக்கிடு' என்பதை கிளிக் செய்து உங்கள் மதிப்பிடப்பட்ட TANGEDCO மின்சாரக் கட்டணத்தின் முழு தொகுப்பு வாரியான விவரத்தை பாருங்கள்.">
+          Click 'Calculate Bill' and see a full slab-wise breakdown of your estimated TANGEDCO electricity bill.
+        </p>
+      </div>
+    </div>
+  </section>
+<!-- ===== DISCLAIMER ===== -->
+<section class="disclaimer-section">
+    <div class="container">
+        <div class="disclaimer-card">
+
+            <h2>⚠️ Disclaimer</h2>
+
+            <p>
+                This website is an independent electricity bill estimation tool
+                created for educational and informational purposes only.
+            </p>
+
+            <p>
+                We are <strong>NOT affiliated with, endorsed by, or associated
+                with TANGEDCO, TNEB, TNERC, the Government of Tamil Nadu, or any
+                government authority.</strong>
+            </p>
+
+            <p>
+                Bill calculations are based on publicly available tariff
+                information. The calculated amount is only an estimate and may
+                differ from your official electricity bill due to Fuel Cost
+                Adjustment (FCA), taxes, meter rent, fixed charges, rebates,
+                rounding, future tariff revisions, or other applicable charges.
+            </p>
+
+            <p>
+                Please verify the final payable amount using your official
+                TANGEDCO bill or through the official TANGEDCO website.
+            </p>
+
+            <p>
+                By using this website, you agree that the website owner shall
+                not be responsible for any loss, damage, or inconvenience
+                arising from the use of this calculator.
+            </p>
+
+        </div>
+    </div>
+</section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">⚡CURRENT BILL CALCULATOR</div>
+      <p data-en="Based on TNEB New Tariff effective 10 May 2026. No fixed charges applicable for domestic consumers from 2026." data-ta="10 மே 2026 முதல் நடைமுறையிலுள்ள TNEB புதிய கட்டண விகிதத்தின் அடிப்படையில். 2026 முதல் வீட்டு நுகர்வோருக்கு நிலையான கட்டணங்கள் பொருந்தாது.">
+        Based on TNEB New Tariff effective 10 May 2026. No fixed charges applicable for domestic consumers from 2026.
+      </p>
+      <p class="footer-note" data-en="This is an informational tool. For official bills, visit tangedco.gov.in" data-ta="இது ஒரு தகவல் கருவி. அதிகாரப்பூர்வ கட்டணங்களுக்கு, tangedco.gov.in பார்வையிடுங்கள்">
+        This is an informational tool. For official bills, visit <a href="https://tangedco.gov.in" target="_blank" rel="noopener">tangedco.gov.in</a>
+      </p>
+    </div>
+  </footer>
+  <p class="footer-copy">
+© 2026 Current Bill Calculator. Independent website. Not affiliated with TANGEDCO or any Government authority.
+</p>
+<p class="developer-credit">
+    Designed & Developed by <strong>Dhilipan A</strong>
+</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
